@@ -55,6 +55,9 @@ class Talker extends Adapter
       unless self.robot.name == message.user.name
         self.receive new LeaveMessage self.userForMessage(room, message)
 
+    bot.on "Reconnect", (room) ->
+      bot.sockets[room] = bot.createSocket(room)
+
     for room in rooms
       bot.sockets[room] = bot.createSocket(room)
 
@@ -129,3 +132,4 @@ class TalkerClient extends EventEmitter
     if @sockets[room] != 'closed'
       @sockets[room]
       console.log 'disconnected (reason: ' + why + ')'
+      self.emit "Reconnect", room
