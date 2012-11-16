@@ -129,6 +129,7 @@ class TalkerClient extends EventEmitter
     @sockets[room].write message, @encoding
 
   disconnect: (room, why) ->
+    self = @
     if @sockets[room] != 'closed'
       @sockets[room]
       console.log 'disconnected (reason: ' + why + ')'
